@@ -1,5 +1,7 @@
 const Answer = document.getElementById('Answer');
 const Question = document.getElementById('Question');
+const loading = document.getElementById('loading');
+const container = document.getElementsByClassName('Container');
 
 let init = 0;
 
@@ -18,6 +20,7 @@ let userData = [];
 Question.innerHTML = botSay()[0];
 
 function botStart() {
+  if (Answer.value.length < 1) return alert('SILAHKAN ISI TERLEBIH DAHULU');
   init++;
   if (init === 1) {
     botDelay({ Nama: Answer.value });
@@ -35,10 +38,13 @@ function botStart() {
 }
 
 function botDelay(jawabanUser) {
-  console.log({ userData: userData });
+  loading.style.display = 'block';
+  container[0].style.filter = 'blur(8px)';
   setTimeout(() => {
     Question.innerHTML = botSay(jawabanUser)[init];
-  }, [1250]);
+    loading.style.display = 'none';
+    container[0].style.filter = 'none';
+  }, [1000]);
   userData.push(Answer.value);
   Answer.value = '';
 }
